@@ -1,0 +1,18 @@
+﻿using etTicket.Data.Base;
+using etTicket.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace etTicket.Data.Services
+{
+    public class CinemasService : EntityBaseRepository<Cinema>, ICinemasService
+    {
+
+        public CinemasService(AppDbContext context) : base(context)
+        {
+        }
+
+    }
+}
