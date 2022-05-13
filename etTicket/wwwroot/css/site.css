@@ -2,70 +2,197 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+/*LOGIN LOGIN*/
+/*geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, Sans-Serif;
+    color: #323232;
+    border: none;
+}
+
+body {
+    background: linear-gradient(45deg,#ffd800,#ffd800,#edfb34,#e9e52e);
+    background-repeat: no-repeat;
+    min-height 100vh;
+    min-width: 100vw;
+    background-size: cover;
+    /*  background-position-y: 200px; */
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
+
+a, label {
+    font: size 0.8rem;
+}
+
+    a:hover {
+        color: #08558b
+    }
+/* container login */
+
+#login-container {
+    background-color: #fff;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 30px;
+    margin-top: 10vh;
+    border-radius: 10px;
+    text-align: center;
+}
+/*formulario */
+
+form {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+label, input {
+    display: block;
+    width: 350px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    font: size 0.8rem;
+}
+
+input {
+    border-bottom: 2px solid #3333;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+    input:focus {
+        border-bottom: 2px solid #08558b;
+    }
+
+#forgot-pass {
+    text-align: right;
+    display: block;
+}
+
+input[type="submit"] {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    border-radius: 20px;
+    margin-top: 30px;
+    color: #fff;
+    background-color: #08558b;
+    cursor: pointer;
+}
+
+    input[type="submit"]:hover {
+        background-color: #1b223c;
+        transition: 0.5s;
+    }
+/* redes sociais */
+
+
+#social-container, #social-container p {
+    margin-bottom: 20px;
+}
+
+    #social-container i {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        line-height: 40px;
+        color: #fff;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+.fa-facebook-f {
+    background-color: #08558b;
+}
+
+.fa-linkedin {
+    background-color: #0077b5;
+}
+/* registrar */
+
+#registar-container p {
+    margin-bottom: 10px;
 }

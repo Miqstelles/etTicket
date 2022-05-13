@@ -50,11 +50,13 @@
             </tfoot>
         </table>
 
-        <div class="text-center">
+        <div class="text-right">
             <div class="btn-group">
-                <a class="btn btn-outline-primary" asp-action="CompleteOrder">
-                    Complete order
-                </a>
+                @*<a class="btn btn-outline-primary" asp-action="CompleteOrder">
+                        Complete order
+                    </a>*@
+                <div id="paypal-btn"></div>
+
                 <a class="btn btn-outline-success" asp-controller="Movies" asp-action="Index">
                     Add more items
                 </a>
@@ -63,3 +65,45 @@
 
     </div>
 </div>
+
+@section Scripts{
+
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+    <script>
+        let _total = @Html.Raw(Model.ShoppingCartTotal);
+        paypal.Button.render({
+            //Configure environment
+            env: 'sandbox',
+            client: {
+                sandbox: 'AXxDlJe8P4Ylgq-f80xa-qZodRnNLoTikwWV8VxWS1UdK3xPjoT_jsleHwzLexBLmtOU4spx-I4TWtgC'
+            },
+            //Customize button
+            locale: 'pt_BR',
+            style: {
+                size: 'small',
+                color: 'gold',
+                shape: 'pill'
+            },
+            commit: true,
+            //Set up a payment
+            payment: function (data, actions) {
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: _total,
+                            currency: 'BRL'
+                        }
+                    }]
+                });
+            },
+            //Execute the payment
+            onAuthorize: function (data, actions) {
+                return actions.payment.execute().then(function () {
+                    var url = '@Url.Action("CompleteOrder", "Orders", new { })';
+                    window.location.href = url;
+                });
+            }
+        }, '#paypal-btn')
+    </script>
+}

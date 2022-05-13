@@ -1,5 +1,7 @@
-﻿using etTicket.Models;
+﻿using etTicket.Data.Static;
+using etTicket.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -155,6 +157,15 @@ namespace etTicket.Data
                 }
             }
 
+        }
+
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+
+
+            }
         }
     }
 
