@@ -1,0 +1,72 @@
+﻿@model NovoProdutoVM
+@using etTicket.Data;
+@{
+    ViewData["Title"] = "Atualizar produto";
+}
+
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Atualizar produto</h4>
+        </p>
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="NomeProduto" class="control-label"></label>
+                                <input asp-for="NomeProduto" class="form-control" />
+                                <span asp-validation-for="NomeProduto" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+
+                                <div class="form-group">
+                                    <label asp-for="Valor" class="control-label"></label>
+                                    <input asp-for="Valor" type="number" class="form-control" />
+                                    <span asp-validation-for="Valor" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Quantidade" class="control-label"></label>
+                                    <input asp-for="Quantidade" type="number" class="form-control" />
+                                    <span asp-validation-for="Quantidade" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="ImageURL" class="control-label"></label>
+                                    <input asp-for="ImageURL" class="form-control" />
+                                    <span asp-validation-for="ImageURL" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="Descrição" class="control-label"></label>
+                                    <textarea asp-for="Descrição" class="form-control"></textarea>
+                                    <span asp-validation-for="Descrição" class="text-danger"></span>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 offset-4 text-center">
+                            <img widht="100% " id="ImageURLPreview" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Atualizar" class="btn btn-outline-success float-right" />
+                            <a class="btn btn-outline-secondary" asp-action="Index">Mostrar todos</a>
+                            <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@Model.Id"><i class="bi bi-trash"></i>Delete </a>
+                        </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

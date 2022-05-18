@@ -24,11 +24,14 @@ namespace etTicket.Controllers
             _signInManager = signInManager;
             _context = context;
         }
+
+
         public async Task<IActionResult> Users()
         {
             var users = await _context.Users.ToListAsync();
             return View(users);
         }
+
 
         public IActionResult Login() => View(new LoginVM());
 
@@ -37,7 +40,7 @@ namespace etTicket.Controllers
         {
             if (!ModelState.IsValid) return View(loginVM);
 
-            var user = await _userManager.FindByEmailAsync(loginVM.EmailAdress);
+            var user = await _userManager.FindByEmailAsync(loginVM.EmailAddress);
             if (user != null)
             {
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
@@ -46,7 +49,7 @@ namespace etTicket.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Movies");
+                        return RedirectToAction("Index", "Produtos");
                     }
                 }
                 TempData["Error"] = "Email ou senha incorretos!";
@@ -56,6 +59,8 @@ namespace etTicket.Controllers
             TempData["Error"] = "Email ou senha incorretos!";
             return View(loginVM);
         }
+
+
         public IActionResult Register() => View(new RegisterVM());
 
         [HttpPost]
@@ -66,7 +71,7 @@ namespace etTicket.Controllers
             var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
             if (user != null)
             {
-                TempData["Error"] = "This email address is already in use";
+                TempData["Error"] = "Email já cadastrado!";
                 return View(registerVM);
             }
 
@@ -79,8 +84,9 @@ namespace etTicket.Controllers
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
 
             if (newUserResponse.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-
+            }
             return View("RegisterCompleted");
         }
 
@@ -88,7 +94,7 @@ namespace etTicket.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Movies");
+            return RedirectToAction("Index", "Produtos");
         }
     }
 }

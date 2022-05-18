@@ -2,19 +2,19 @@
 @model RegisterVM;
 
 @{
-    ViewData["Title"] = "Registre sua conta";
+    ViewData["Title"] = "Cadastre uma nova conta";
 }
 
 <div class="row">
     <div class="col-md-6 offset-3">
         <p>
-            <h4>Registre uma nova conta</h4>
+            <h4>Cadastre uma nova conta</h4>
         </p>
 
         @if (TempData["Error"] != null)
         {
             <div class="col-md-12 alert alert-danger">
-                <span><b>Desculpe!</b> - @TempData["Error"]</span>
+                <span><b>Desculpe!</b> - @TempData["Error"] </span>
             </div>
         }
 
@@ -46,7 +46,7 @@
 
                     <div class="form-group">
                         <input class="btn btn-outline-success float-right" type="submit" value="Sign up" />
-                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Cancel</a>
+                        <a class="btn btn-outline-secondary" asp-controller="Produtos" asp-action="Index">Cancel</a>
                     </div>
                 </form>
             </div>

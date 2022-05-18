@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Produtos>
+
+@{
+    ViewData["Title"] = "Lista de Produtos";
+}
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+{
+    <div style="width: 100%; height: 500px;">
+        <img src="~/img/PineGas5.png" style="padding-left:700px;" />
+        <h4 style="padding-left:480px;">Bem vindo a Pinegas, aqui você encontra as bebidas digestivas ideias para você.</h4>
+    </div>
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.NomeProduto
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                    }
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="@item.ImageURL" width="100%;" alt="@item.NomeProduto">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Descrição</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
+                                    <i class="bi bi-eye-fill"></i> Show Details
+                                </a>
+                                <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
+                                    <i class="bi bi-cart-plus"></i> Adicionar ao carrinho (Valor @item.Valor.ToString("c"))
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Produtos")
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+{
+    <!--INICIO FORM-->
+    <div class="container">
+        <form action="https://api.staticforms.xyz/submit" method="post" class="row g-3 needs-validation" novalidate>
+            <!--Chave de acesso API-->
+            <input type="hidden" name="accessKey" value="e9a16d33-922a-4c46-afa0-b70876c47b6e">
+            <input type="hidden" name="redirectTo" value="file:///C:/Users/Miqu%C3%A9ias/OneDrive/%C3%81rea%20de%20Trabalho/SENAI/ExerciciosJS0804/html/form.htm">
+            <!-- Optional -->
+            <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="validationCustom01" name="$nome" required>
+                <div class="valid-feedback">
+                    digite o nome
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustom02" class="form-label">Sobrenome</label>
+                <input type="text" class="form-control" id="validationCustom02" name="$nome" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="validationCustomUsername" class="form-label">Usuario</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend"></span>
+                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="$usuario" required>
+                    <div class="invalid-feedback">
+                        Please choose a username.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="validationCustom03" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="validationCustom03" name="$cidade" required>
+                <div class="invalid-feedback">
+                    Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="validationCustom04" class="form-label">UF</label>
+                <select class="form-select" id="validationCustom04" name="$uf" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option>SP</option>
+                    <option>RJ</option>
+                    <option>MG</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid state.
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="validationCustom05" class="form-label">CEP</label>
+                <input type="text" class="form-control" id="validationCustom05" name="$cep" required>
+                <div class="invalid-feedback">
+                    Please provide a valid zip.
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" name="$termo" required>
+                    <label class="form-check-label" for="invalidCheck">
+                        Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                        You must agree before submitting.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit" asp-controller="Produtos" asp-action="Index">Enviar</button>
+            </div>
+        </form>
+    </div>
+    <!--FIM FORM-->
+}

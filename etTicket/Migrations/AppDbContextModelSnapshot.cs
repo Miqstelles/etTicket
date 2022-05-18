@@ -150,46 +150,6 @@ namespace etTicket.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Actor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ProfilePictureURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Actors");
-                });
-
-            modelBuilder.Entity("etTicket.Models.Actor_Movie", b =>
-                {
-                    b.Property<int>("ActorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ActorId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("Actors_Movies");
-                });
-
             modelBuilder.Entity("etTicket.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -258,73 +218,6 @@ namespace etTicket.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Cinema", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Logo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cinemas");
-                });
-
-            modelBuilder.Entity("etTicket.Models.Movie", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CinemaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImageURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MovieCategory")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ProducerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CinemaId");
-
-                    b.HasIndex("ProducerId");
-
-                    b.ToTable("Movies");
-                });
-
             modelBuilder.Entity("etTicket.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -336,9 +229,11 @@ namespace etTicket.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -353,47 +248,49 @@ namespace etTicket.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<double>("price")
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Valor")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
-
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Producer", b =>
+            modelBuilder.Entity("etTicket.Models.Produtos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Bio")
-                        .IsRequired()
+                    b.Property<string>("Descrição")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ProfilePictureURL")
-                        .IsRequired()
+                    b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeProduto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Valor")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Producers");
+                    b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("etTicket.Models.ShoppingCartItem", b =>
@@ -406,7 +303,7 @@ namespace etTicket.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MovieId")
+                    b.Property<int?>("ProdutosId")
                         .HasColumnType("int");
 
                     b.Property<string>("ShoppingCartId")
@@ -414,7 +311,7 @@ namespace etTicket.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("ProdutosId");
 
                     b.ToTable("ShoppingCartItems");
                 });
@@ -470,95 +367,46 @@ namespace etTicket.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("etTicket.Models.Actor_Movie", b =>
+            modelBuilder.Entity("etTicket.Models.Order", b =>
                 {
-                    b.HasOne("etTicket.Models.Actor", "Actor")
-                        .WithMany("Actors_Movies")
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("etTicket.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("etTicket.Models.Movie", "Movie")
-                        .WithMany("Actors_Movies")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actor");
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("etTicket.Models.Movie", b =>
-                {
-                    b.HasOne("etTicket.Models.Cinema", "Cinema")
-                        .WithMany("Movies")
-                        .HasForeignKey("CinemaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("etTicket.Models.Producer", "Producer")
-                        .WithMany("Movies")
-                        .HasForeignKey("ProducerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cinema");
-
-                    b.Navigation("Producer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("etTicket.Models.OrderItem", b =>
                 {
-                    b.HasOne("etTicket.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("etTicket.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.HasOne("etTicket.Models.Produtos", "Produto")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
+
+                    b.Navigation("Produto");
                 });
 
             modelBuilder.Entity("etTicket.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("etTicket.Models.Movie", "Movie")
+                    b.HasOne("etTicket.Models.Produtos", "Produtos")
                         .WithMany()
-                        .HasForeignKey("MovieId");
+                        .HasForeignKey("ProdutosId");
 
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("etTicket.Models.Actor", b =>
-                {
-                    b.Navigation("Actors_Movies");
-                });
-
-            modelBuilder.Entity("etTicket.Models.Cinema", b =>
-                {
-                    b.Navigation("Movies");
-                });
-
-            modelBuilder.Entity("etTicket.Models.Movie", b =>
-                {
-                    b.Navigation("Actors_Movies");
+                    b.Navigation("Produtos");
                 });
 
             modelBuilder.Entity("etTicket.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("etTicket.Models.Producer", b =>
-                {
-                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

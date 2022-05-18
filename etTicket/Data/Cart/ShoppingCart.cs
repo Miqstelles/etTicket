@@ -36,16 +36,16 @@ namespace etTicket.Data.Cart
 
         }
 
-        public void AddItemToCart(Movie movie)
+        public void AddItemToCart(Produtos produtos)
         {
-            var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Movie.Id == movie.Id && n.ShoppingCartId == ShoppingCartId);
+            var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Produtos.Id == produtos.Id && n.ShoppingCartId == ShoppingCartId);
 
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem()
                 {
                     ShoppingCartId = ShoppingCartId,
-                    Movie = movie,
+                    Produtos = produtos,
                     Amount = 1
                 };
 
@@ -58,9 +58,9 @@ namespace etTicket.Data.Cart
             _context.SaveChanges();
         }
 
-        public void RemoveItemFromCart(Movie movie)
+        public void RemoveItemFromCart(Produtos produtos)
         {
-            var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Movie.Id == movie.Id && n.ShoppingCartId == ShoppingCartId);
+            var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Produtos.Id == produtos.Id && n.ShoppingCartId == ShoppingCartId);
 
             if (shoppingCartItem != null)
             {
@@ -79,10 +79,10 @@ namespace etTicket.Data.Cart
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
             return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems.Where(n => n.ShoppingCartId ==
-            ShoppingCartId).Include(n => n.Movie).ToList());
+            ShoppingCartId).Include(n => n.Produtos).ToList());
         }
 
-        public double GetShoppingCartTotal() => _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Select(n => n.Movie.Price * n.Amount).Sum();
+        public double GetShoppingCartTotal() => _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Select(n => n.Produtos.Valor * n.Amount).Sum();
 
         public async Task ClearShoppingCartAsync()
         {

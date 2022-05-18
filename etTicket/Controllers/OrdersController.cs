@@ -1,32 +1,34 @@
 ﻿using etTicket.Data.Cart;
 using etTicket.Data.Services;
 using etTicket.Data.ViewModels;
+using etTicket.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace etTicket.Controllers
 {
     public class OrdersController : Controller
     {
-        private readonly IMoviesService _moviesService;
+        private readonly IProdutosService _produtosService;
         private readonly ShoppingCart _shoppingCart;
         private readonly IOrdersService _ordersService;
-
-        public OrdersController(IMoviesService moviesService, ShoppingCart shoppingCart, IOrdersService ordersService)
+        public OrdersController(IProdutosService produtosService, ShoppingCart shoppingCart, IOrdersService ordersService)
         {
-            _moviesService = moviesService;
+            _produtosService = produtosService;
             _shoppingCart = shoppingCart;
             _ordersService = ordersService;
         }
 
         public async Task<IActionResult> Index()
         {
-            string userId = "";
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
 
-            var orders = await _ordersService.GetOrderByUserIdAsync(userId);
+            var orders = await _ordersService.GetOrdersByUserIdAndRoleAsync(userId, userRole);
             return View(orders);
         }
 
@@ -45,7 +47,7 @@ namespace etTicket.Controllers
 
         public async Task<IActionResult> AddItemToShoppingCart(int id)
         {
-            var item = await _moviesService.GetMovieByIdAsync(id);
+            var item = await _produtosService.GetProdutoByIdAsync(id);
 
             if (item != null)
             {
@@ -56,7 +58,7 @@ namespace etTicket.Controllers
 
         public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
         {
-            var item = await _moviesService.GetMovieByIdAsync(id);
+            var item = await _produtosService.GetProdutoByIdAsync(id);
 
             if (item != null)
             {
@@ -67,11 +69,12 @@ namespace etTicket.Controllers
 
         public async Task<IActionResult> CompleteOrder()
         {
-            var items = _shoppingCart.GetShoppingCartItems();
-            string userId = "";
-            string userEmailAdress = "";
 
-            await _ordersService.StoreOrderAsync(items, userId, userEmailAdress);
+            var items = _shoppingCart.GetShoppingCartItems();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
+
+            await _ordersService.StoreOrderAsync(items, userId, userEmailAddress);
             await _shoppingCart.ClearShoppingCartAsync();
 
             return View("OrderCompleted");

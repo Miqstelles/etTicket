@@ -30,10 +30,7 @@ namespace etTicket
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
             //Services configuration
-            services.AddScoped<IActorsService, ActorsService>();
-            services.AddScoped<IProducersService, ProducersService>();
-            services.AddScoped<ICinemasService, CinemasService>();
-            services.AddScoped<IMoviesService, MoviesService>();
+            services.AddScoped<IProdutosService, ProdutosService>();
             services.AddScoped<IOrdersService, OrdersService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

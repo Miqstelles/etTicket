@@ -11,15 +11,20 @@ namespace etTicket.Data.Services
     {
         private readonly AppDbContext _context;
 
+
         public OrdersService(AppDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<Order>> GetOrderByUserIdAsync(string userId)
+        public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole)
         {
-            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Movie).Where(n => n.UserId ==
-            userId).ToListAsync();
+            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Produto).Include(n => n.User).ToListAsync();
+
+            if (userRole != "Admin")
+            {
+                orders = orders.Where(n => n.UserId == userId).ToList();
+            }
 
             return orders;
         }
@@ -34,18 +39,33 @@ namespace etTicket.Data.Services
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
 
+
+
             foreach (var item in items)
             {
                 var orderItem = new OrderItem()
                 {
                     Amount = item.Amount,
-                    MovieId = item.Movie.Id,
+                    ProdutoId = item.Produtos.Id,
                     OrderId = order.Id,
-                    price = item.Movie.Price
+                    Valor = item.Produtos.Valor,
+
                 };
                 await _context.OrderItems.AddAsync(orderItem);
+
             }
+
             await _context.SaveChangesAsync();
+
+
+        }
+
+        public async Task<OrderItem> GetQntdOrderByIdAsync(OrderItem data, int id)
+        {
+            var dbAmount = await _context.OrderItems.FirstOrDefaultAsync(n => n.Id == id);
+            dbAmount.Amount = data.Amount;
+
+            return dbAmount;
         }
     }
 }

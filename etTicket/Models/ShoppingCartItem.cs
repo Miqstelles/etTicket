@@ -11,7 +11,7 @@ namespace etTicket.Models
         [Key]
         public int Id { get; set; }
 
-        public Movie Movie { get; set; }
+        public Produtos Produtos { get; set; }
         public int Amount { get; set; }
 
 

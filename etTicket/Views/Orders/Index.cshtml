@@ -16,9 +16,10 @@
                     <th>Order ID</th>
                     <th>Items</th>
                     <th>Total</th>
-
-                    <th>User</th>
-
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <th>User</th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -32,15 +33,19 @@
                                 {
                                     <li>
                                         <div class="alert alert-info" role="alert">
-                                            <span class="badge bg-success">@item.Amount</span> [@item.price.ToString("c")] - @item.Movie.Name
+                                            <span class="badge bg-success">@item.Amount</span> [@item.Valor.ToString("c")] - @item.Produto.NomeProduto
                                         </div>
                                     </li>
                                 }
                             </ul>
                         </td>
                         <td class="align-middle">
-                            @order.OrderItems.Select(m => m.Movie.Price * m.Amount).Sum().ToString("c")
+                            @order.OrderItems.Select(p => p.Produto.Valor * p.Amount).Sum().ToString("c")
                         </td>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <td class="align-middle"> @order.User.FullName </td>
+                        }
                     </tr>
                 }
             </tbody>

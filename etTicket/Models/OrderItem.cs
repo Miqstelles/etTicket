@@ -13,11 +13,11 @@ namespace etTicket.Models
         public int Id { get; set; }
 
         public int Amount { get; set; }
-        public double price { get; set; }
+        public double Valor { get; set; }
 
-        public int MovieId { get; set; }
-        [ForeignKey("MovieId")]
-        public Movie Movie { get; set; }
+        public int ProdutoId { get; set; }
+        [ForeignKey("ProdutoId")]
+        public Produtos Produto { get; set; }
 
         public int OrderId { get; set; }
         [ForeignKey("OrderId")]
