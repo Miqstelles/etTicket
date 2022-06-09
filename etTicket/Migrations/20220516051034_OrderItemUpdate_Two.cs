@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace etTicket.Migrations
+namespace Pinegas.Migrations
 {
     public partial class OrderItemUpdate_Two : Migration
     {

@@ -1,6 +1,6 @@
-﻿using etTicket.Data;
-using etTicket.Data.Services;
-using etTicket.Models;
+﻿using Pinegas.Data;
+using Pinegas.Data.Services;
+using Pinegas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Controllers
+namespace Pinegas.Controllers
 {
     public class ProdutosController : Controller
     {
@@ -58,7 +58,7 @@ namespace etTicket.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //GET: Movies/Edit/1
+        //GET: Produtos/Edit/1
         public async Task<IActionResult> Edit(int id)
         {
             var produtoDetails = await _service.GetProdutoByIdAsync(id);

@@ -1,7 +1,7 @@
 ﻿@model List<Order>
 
 @{
-    ViewData["Title"] = "Todos os pedidos";
+    ViewData["Title"] = "Lista de produtos vendidos";
 }
 
 <div class="row">
@@ -13,39 +13,29 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID do Pedido</th>
-                    <th>Produtos</th>
-                    <th>Total</th>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <th>Usuario</th>
-                    }
+
+                    <th>Produtos Vendidos</th>
+
                 </tr>
             </thead>
             <tbody>
                 @foreach (var order in Model)
                 {
                     <tr>
-                        <td class="align-middle">@order.Id</td>
+
                         <td class="align-middle">
                             <ul style="list-style-type:none">
                                 @foreach (var item in order.OrderItems)
                                 {
                                     <li>
                                         <div class="alert alert-info" role="alert">
-                                            <span class="badge bg-success">@item.Amount</span> [@item.Valor.ToString("c")] - @item.Produto.NomeProduto
+                                            <span class="badge bg-success">@item.Amount</span>  @item.Produto.NomeProduto
                                         </div>
                                     </li>
                                 }
                             </ul>
                         </td>
-                        <td class="align-middle">
-                            @order.OrderItems.Select(m => m.Produto.Valor * m.Amount).Sum().ToString("c")
-                        </td>
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                        {
-                            <td class="align-middle"> @order.Email </td>
-                        }
+
                     </tr>
                 }
             </tbody>

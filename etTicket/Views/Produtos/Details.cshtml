@@ -10,7 +10,7 @@
         <div class="card mb-12">
             <div class="row g-0">
                 <div class="col-md-12">
-                    <div class="card-header text-white bg-info">
+                    <div class="card-header text-black" style="background: rgb(34,193,195); background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(247,253,45,1) 100%);">
                         <p class="card-text">
                             <h5 class="card-title">
                                 @Model.NomeProduto
@@ -49,11 +49,14 @@
                     <div class="card-footer ">
                         <p class="card-text">
                             <a class="btn btn-outline-primary float-right" asp-action="Index">
-                                Back to List
+                                Voltar
                             </a>
-                            <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
-                                <i class="bi bi-cart-plus"></i> Adicionar ao carrinho(Valor @Model.Valor.ToString("c"))
-                            </a>
+                            @if (User.Identity.IsAuthenticated & User.IsInRole("User") || User.Identity.IsAuthenticated & User.IsInRole("Admin"))
+                            {
+                                <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
+                                    <i class="bi bi-cart-plus"></i> Adicionar ao carrinho(Valor @Model.Valor.ToString("c"))
+                                </a>
+                            }
                         </p>
                     </div>
                 </div>

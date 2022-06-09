@@ -1,10 +1,10 @@
-﻿using etTicket.Models;
+﻿using Pinegas.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Data.Services
+namespace Pinegas.Data.Services
 {
     public interface IOrdersService
     {

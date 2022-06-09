@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Pinegas.Data;
+using Pinegas.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Models
+namespace Pinegas.Models
 {
     public class Order
     {
@@ -17,7 +19,7 @@ namespace etTicket.Models
 
         public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public ApplicationUser User { get; set; }
+        public DataContext User { get; set; }
 
         public List<OrderItem> OrderItems { get; set; }
     }

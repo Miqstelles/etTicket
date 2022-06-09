@@ -1,11 +1,11 @@
-﻿using etTicket.Data.Cart;
+﻿using Pinegas.Data.Cart;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Data.ViewComponents
+namespace Pinegas.Data.ViewComponents
 {
 
     public class ShoppingCartSummary : ViewComponent

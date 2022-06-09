@@ -1,25 +1,25 @@
-﻿using etTicket.Models;
+﻿using Pinegas.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Data.Services
+namespace Pinegas.Data.Services
 {
     public class OrdersService : IOrdersService
     {
-        private readonly AppDbContext _context;
+        private readonly DataContext _context;
 
 
-        public OrdersService(AppDbContext context)
+        public OrdersService(DataContext context)
         {
             _context = context;
         }
 
         public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole)
         {
-            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Produto).Include(n => n.User).ToListAsync();
+            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Produto).ToListAsync();
 
             if (userRole != "Admin")
             {
@@ -58,14 +58,6 @@ namespace etTicket.Data.Services
             await _context.SaveChangesAsync();
 
 
-        }
-
-        public async Task<OrderItem> GetQntdOrderByIdAsync(OrderItem data, int id)
-        {
-            var dbAmount = await _context.OrderItems.FirstOrDefaultAsync(n => n.Id == id);
-            dbAmount.Amount = data.Amount;
-
-            return dbAmount;
         }
     }
 }

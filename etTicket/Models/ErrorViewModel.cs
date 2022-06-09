@@ -1,6 +1,6 @@
 using System;
 
-namespace etTicket.Models
+namespace Pinegas.Models
 {
     public class ErrorViewModel
     {

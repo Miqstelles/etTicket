@@ -1,0 +1,54 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace Pinegas.Migrations
+{
+    public partial class OrderUpdate : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_OrderItems_Orders_UserId",
+                table: "OrderItems");
+
+            migrationBuilder.DropIndex(
+                name: "IX_OrderItems_UserId",
+                table: "OrderItems");
+
+            migrationBuilder.DropColumn(
+                name: "UserId",
+                table: "OrderItems");
+
+            migrationBuilder.DropColumn(
+                name: "FullName",
+                table: "AspNetUsers");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AddColumn<int>(
+                name: "UserId",
+                table: "OrderItems",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "FullName",
+                table: "AspNetUsers",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_UserId",
+                table: "OrderItems",
+                column: "UserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_OrderItems_Orders_UserId",
+                table: "OrderItems",
+                column: "UserId",
+                principalTable: "Orders",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+        }
+    }
+}

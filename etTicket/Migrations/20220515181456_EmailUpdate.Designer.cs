@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using etTicket.Data;
+using Pinegas.Data;
 
-namespace etTicket.Migrations
+namespace Pinegas.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(DataContext))]
     [Migration("20220515181456_EmailUpdate")]
     partial class EmailUpdate
     {
@@ -152,7 +152,7 @@ namespace etTicket.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Actor", b =>
+            modelBuilder.Entity("Pinegas.Models.Actor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,7 +177,7 @@ namespace etTicket.Migrations
                     b.ToTable("Actors");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Actor_Movie", b =>
+            modelBuilder.Entity("Pinegas.Models.Actor_Movie", b =>
                 {
                     b.Property<int>("ActorId")
                         .HasColumnType("int");
@@ -192,7 +192,7 @@ namespace etTicket.Migrations
                     b.ToTable("Actors_Movies");
                 });
 
-            modelBuilder.Entity("etTicket.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Pinegas.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -260,7 +260,7 @@ namespace etTicket.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Cinema", b =>
+            modelBuilder.Entity("Pinegas.Models.Cinema", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,7 +284,7 @@ namespace etTicket.Migrations
                     b.ToTable("Cinemas");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Movie", b =>
+            modelBuilder.Entity("Pinegas.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -327,7 +327,7 @@ namespace etTicket.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Order", b =>
+            modelBuilder.Entity("Pinegas.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -345,7 +345,7 @@ namespace etTicket.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("etTicket.Models.OrderItem", b =>
+            modelBuilder.Entity("Pinegas.Models.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -373,7 +373,7 @@ namespace etTicket.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Producer", b =>
+            modelBuilder.Entity("Pinegas.Models.Producer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,7 +398,7 @@ namespace etTicket.Migrations
                     b.ToTable("Producers");
                 });
 
-            modelBuilder.Entity("etTicket.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Pinegas.Models.ShoppingCartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -432,7 +432,7 @@ namespace etTicket.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -441,7 +441,7 @@ namespace etTicket.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -456,7 +456,7 @@ namespace etTicket.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -465,22 +465,22 @@ namespace etTicket.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("etTicket.Models.Actor_Movie", b =>
+            modelBuilder.Entity("Pinegas.Models.Actor_Movie", b =>
                 {
-                    b.HasOne("etTicket.Models.Actor", "Actor")
+                    b.HasOne("Pinegas.Models.Actor", "Actor")
                         .WithMany("Actors_Movies")
                         .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("etTicket.Models.Movie", "Movie")
+                    b.HasOne("Pinegas.Models.Movie", "Movie")
                         .WithMany("Actors_Movies")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -491,15 +491,15 @@ namespace etTicket.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Movie", b =>
+            modelBuilder.Entity("Pinegas.Models.Movie", b =>
                 {
-                    b.HasOne("etTicket.Models.Cinema", "Cinema")
+                    b.HasOne("Pinegas.Models.Cinema", "Cinema")
                         .WithMany("Movies")
                         .HasForeignKey("CinemaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("etTicket.Models.Producer", "Producer")
+                    b.HasOne("Pinegas.Models.Producer", "Producer")
                         .WithMany("Movies")
                         .HasForeignKey("ProducerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -510,15 +510,15 @@ namespace etTicket.Migrations
                     b.Navigation("Producer");
                 });
 
-            modelBuilder.Entity("etTicket.Models.OrderItem", b =>
+            modelBuilder.Entity("Pinegas.Models.OrderItem", b =>
                 {
-                    b.HasOne("etTicket.Models.Movie", "Movie")
+                    b.HasOne("Pinegas.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("etTicket.Models.Order", "Order")
+                    b.HasOne("Pinegas.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -529,36 +529,36 @@ namespace etTicket.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("etTicket.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Pinegas.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("etTicket.Models.Movie", "Movie")
+                    b.HasOne("Pinegas.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("MovieId");
 
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Actor", b =>
+            modelBuilder.Entity("Pinegas.Models.Actor", b =>
                 {
                     b.Navigation("Actors_Movies");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Cinema", b =>
+            modelBuilder.Entity("Pinegas.Models.Cinema", b =>
                 {
                     b.Navigation("Movies");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Movie", b =>
+            modelBuilder.Entity("Pinegas.Models.Movie", b =>
                 {
                     b.Navigation("Actors_Movies");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Order", b =>
+            modelBuilder.Entity("Pinegas.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Producer", b =>
+            modelBuilder.Entity("Pinegas.Models.Producer", b =>
                 {
                     b.Navigation("Movies");
                 });

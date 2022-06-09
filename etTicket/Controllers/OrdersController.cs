@@ -1,7 +1,7 @@
-﻿using etTicket.Data.Cart;
-using etTicket.Data.Services;
-using etTicket.Data.ViewModels;
-using etTicket.Models;
+﻿using Pinegas.Data.Cart;
+using Pinegas.Data.Services;
+using Pinegas.Data.ViewModels;
+using Pinegas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace etTicket.Controllers
+namespace Pinegas.Controllers
 {
     public class OrdersController : Controller
     {
@@ -78,6 +78,15 @@ namespace etTicket.Controllers
             await _shoppingCart.ClearShoppingCartAsync();
 
             return View("OrderCompleted");
+        }
+
+        public async Task<IActionResult> ProdutosVendidos()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+
+            var orders = await _ordersService.GetOrdersByUserIdAndRoleAsync(userId, userRole);
+            return View(orders);
         }
     }
 }

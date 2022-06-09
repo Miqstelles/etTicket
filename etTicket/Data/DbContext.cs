@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using etTicket.Models;
+using Pinegas.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
-namespace etTicket.Data
+namespace Pinegas.Data
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser>
+    public class DataContext : IdentityDbContext<IdentityUser, IdentityRole, string, IdentityUserClaim<string>, IdentityUserRole<string>,
+    IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options)
+           : base(options)
         {
-
         }
 
         public DbSet<Produtos> Produtos { get; set; }
@@ -22,4 +24,5 @@ namespace etTicket.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
+
 }

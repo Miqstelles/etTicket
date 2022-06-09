@@ -1,22 +1,22 @@
-﻿using etTicket.Data.Base;
-using etTicket.Data.ViewModels;
-using etTicket.Models;
+﻿using Pinegas.Data.Base;
+using Pinegas.Data.ViewModels;
+using Pinegas.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Data.Services
+namespace Pinegas.Data.Services
 {
     public class ProdutosService : EntityBaseRepository<Produtos>, IProdutosService
     {
-        private readonly AppDbContext _context;
+        private readonly DataContext _context;
 
 
         OrderItem o = new OrderItem();
 
-        public ProdutosService(AppDbContext context) : base(context)
+        public ProdutosService(DataContext context) : base(context)
         {
             _context = context;
         }

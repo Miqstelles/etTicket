@@ -1,12 +1,12 @@
-﻿using etTicket.Data.Base;
-using etTicket.Data.ViewModels;
-using etTicket.Models;
+﻿using Pinegas.Data.Base;
+using Pinegas.Data.ViewModels;
+using Pinegas.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Data.Services
+namespace Pinegas.Data.Services
 {
     public interface IProdutosService : IEntityBaseRepository<Produtos>
     {

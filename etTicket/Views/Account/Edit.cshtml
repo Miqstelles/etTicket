@@ -1,44 +1,47 @@
 ﻿@using Pinegas.Data.ViewModels;
-@model LoginVM;
-
+@model RegisterVM;
 @{
-    ViewData["Title"] = "Logar na sua conta";
+    ViewData["Title"] = "Atualizar perfil";
 }
 
-<div class="row">
-    <div class="col-md-6 offset-3">
-        <p>
-            <h4>Logar na sua conta</h4>
-        </p>
 
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Atualizar perfil!</h4>
+        </p>
         @if (TempData["Error"] != null)
         {
             <div class="col-md-12 alert-danger">
                 <span><b>Desculpe!</b> - @TempData["Error"] </span>
             </div>
         }
-
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action="Login" asp-controller="Account">
+                <form asp-action="Edit" asp-controller="Account">
                     <div asp-validation-summary="ModelOnly" class="text-danger">
 
                     </div>
-
                     <div class="form-group">
                         <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" required />
+                        <input asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="Password" class="control-label">Senha</label>
-                        <input asp-for="Password" class="form-control" type="password" required />
+                        <input asp-for="Password" class="form-control" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Login" />
+                        <label asp-for="ConfirmPassword" class="control-label">Confirmar Senha</label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Registrar" />
                         <a class="btn btn-outline-secondary" asp-controller="Produtos" asp-action="Index">Cancelar</a>
                     </div>
                 </form>
@@ -46,3 +49,4 @@
         </div>
     </div>
 </div>
+

@@ -1,7 +1,7 @@
-using etTicket.Data;
-using etTicket.Data.Cart;
-using etTicket.Data.Services;
-using etTicket.Models;
+using Pinegas.Data;
+using Pinegas.Data.Cart;
+using Pinegas.Data.Services;
+using Pinegas.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,8 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Pinegas.Models;
 
-namespace etTicket
+namespace Pinegas
 {
     public class Startup
     {
@@ -26,8 +27,6 @@ namespace etTicket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //DbContext configuration
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
             //Services configuration
             services.AddScoped<IProdutosService, ProdutosService>();
@@ -37,7 +36,7 @@ namespace etTicket
             services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 
             //Autenticação e Autorizaçõa
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
             services.AddMemoryCache();
             services.AddSession();
             services.AddAuthentication(options =>
@@ -46,6 +45,24 @@ namespace etTicket
             });
 
             services.AddControllersWithViews();
+            services.AddDbContext<DataContext>(
+             options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+            //services.AddIdentity<ApplicationUser,Role>().AddEntityFrameworkStores<DbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+               .AddEntityFrameworkStores<DataContext>()
+               .AddDefaultTokenProviders();
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddSession(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,14 +80,12 @@ namespace etTicket
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors();
             app.UseRouting();
             app.UseSession();
 
             //Autenticação e autorização
             app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -81,8 +96,8 @@ namespace etTicket
             });
 
             //Seed database
-            AppDbInitializer.Seed(app);
             AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+
         }
     }
 }

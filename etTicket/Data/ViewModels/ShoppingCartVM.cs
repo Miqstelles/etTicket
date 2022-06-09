@@ -1,11 +1,11 @@
-﻿using etTicket.Data.Cart;
+﻿using Pinegas.Data.Cart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using etTicket.Models;
+using Pinegas.Models;
 
-namespace etTicket.Data.ViewModels
+namespace Pinegas.Data.ViewModels
 {
     public class ShoppingCartVM
     {

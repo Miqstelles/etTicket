@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using etTicket.Data;
+using Pinegas.Data;
 
-namespace etTicket.Migrations
+namespace Pinegas.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    [Migration("20220521190402_Identity_Added")]
+    partial class Identity_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +152,7 @@ namespace etTicket.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("etTicket.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Pinegas.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -218,7 +220,7 @@ namespace etTicket.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Order", b =>
+            modelBuilder.Entity("Pinegas.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -229,16 +231,14 @@ namespace etTicket.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("etTicket.Models.OrderItem", b =>
+            modelBuilder.Entity("Pinegas.Models.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -254,6 +254,9 @@ namespace etTicket.Migrations
                     b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Valor")
                         .HasColumnType("float");
 
@@ -263,10 +266,12 @@ namespace etTicket.Migrations
 
                     b.HasIndex("ProdutoId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Produtos", b =>
+            modelBuilder.Entity("Pinegas.Models.Produtos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -293,7 +298,7 @@ namespace etTicket.Migrations
                     b.ToTable("Produtos");
                 });
 
-            modelBuilder.Entity("etTicket.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Pinegas.Models.ShoppingCartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -327,7 +332,7 @@ namespace etTicket.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,7 +341,7 @@ namespace etTicket.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -351,7 +356,7 @@ namespace etTicket.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -360,51 +365,46 @@ namespace etTicket.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("etTicket.Models.ApplicationUser", null)
+                    b.HasOne("Pinegas.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("etTicket.Models.Order", b =>
+            modelBuilder.Entity("Pinegas.Models.OrderItem", b =>
                 {
-                    b.HasOne("etTicket.Models.ApplicationUser", "User")
+                    b.HasOne("Pinegas.Models.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("etTicket.Models.OrderItem", b =>
-                {
-                    b.HasOne("etTicket.Models.Order", "Order")
-                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("etTicket.Models.Produtos", "Produto")
+                    b.HasOne("Pinegas.Models.Produtos", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Pinegas.Models.Order", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Order");
 
                     b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("etTicket.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("Pinegas.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("etTicket.Models.Produtos", "Produtos")
+                    b.HasOne("Pinegas.Models.Produtos", "Produtos")
                         .WithMany()
                         .HasForeignKey("ProdutosId");
 
                     b.Navigation("Produtos");
                 });
 
-            modelBuilder.Entity("etTicket.Models.Order", b =>
+            modelBuilder.Entity("Pinegas.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });

@@ -1,4 +1,4 @@
-﻿using etTicket.Models;
+﻿using Pinegas.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,17 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Data.Cart
+namespace Pinegas.Data.Cart
 {
     public class ShoppingCart
     {
 
-        public AppDbContext _context { get; set; }
+        public DataContext _context { get; set; }
 
         public string ShoppingCartId { get; set; }
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }
 
-        public ShoppingCart(AppDbContext context)
+        public ShoppingCart(DataContext context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace etTicket.Data.Cart
         public static ShoppingCart GetShoppingCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-            var context = services.GetService<AppDbContext>();
+            var context = services.GetService<DataContext>();
 
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
             session.SetString("CartId", cartId);

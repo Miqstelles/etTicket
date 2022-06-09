@@ -1,5 +1,5 @@
-﻿using etTicket.Data;
-using etTicket.Data.Base;
+﻿using Pinegas.Data;
+using Pinegas.Data.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace etTicket.Models
+namespace Pinegas.Models
 {
     public class NovoProdutoVM
     {
@@ -21,7 +21,7 @@ namespace etTicket.Models
         [Required(ErrorMessage = "Insira a descrição do produto")]
         public string Descrição { get; set; }
 
-        [Display(Name = "Preço in R$")]
+        [Display(Name = "Preço em R$")]
         [Required(ErrorMessage = "Insira o preço do produto")]
         public double Valor { get; set; }
 
